@@ -1,0 +1,16 @@
+<%= render "form" %>
+
+<% if @song != nil %>
+  <br/>
+  <br/>
+  <% @song.lyrics.each do |pair| %>
+    <% pair.each do |line| %>
+    <% if line.length == 1 %>
+      <%= line.join(" ") %>
+      <br/>
+      <%end%>
+    <%end%>
+  <br/>
+  <br/>
+  <%= @song.text %>
+<%end%>
