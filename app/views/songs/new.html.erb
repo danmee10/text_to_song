@@ -1,16 +1,33 @@
 <%= render "form" %>
+  <br/>
+  <br/>
 
-<% if @song != nil %>
-  <br/>
-  <br/>
+<% if @song%>
   <% @song.lyrics.each do |pair| %>
-    <% pair.each do |line| %>
-    <% if line.length == 1 %>
-      <%= line.join(" ") %>
-      <br/>
-      <%end%>
-    <%end%>
+    <%= pair %>
+  <% end %>
   <br/>
   <br/>
   <%= @song.text %>
 <%end%>
+
+
+
+
+
+<% if false %>
+  <% @song.lyrics.each do |pair| %>
+    <%if pair.class == String %>
+      <% pair.upcase %>
+    <% else %>
+      <% pair.each do |line| %>
+        <% if line.class != String %>
+          <%= line.join(" ") %>
+          <br/>
+        <%else%>
+          <%= line %>
+        <% end %>
+      <%end%>
+    <%end%>
+  <%end%>
+  <%end%>

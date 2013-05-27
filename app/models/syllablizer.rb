@@ -1,5 +1,5 @@
 module Syllablizer
-  SYLLABLES_PER_LINE = 10
+  SYLLABLES_PER_LINE = 5
 
   def syllablize(text)
     line = []

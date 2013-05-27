@@ -14,7 +14,7 @@ module RhymingEngine
     else
       line_one = pair[0]
       line_two = pair[1]
-      # line_two[-1] = rhyme(line_two[-1], line_one[-1])
+      line_two[-1] = rhyme(line_two[-1], line_one[-1])
       [line_one, line_two]
     end
   end

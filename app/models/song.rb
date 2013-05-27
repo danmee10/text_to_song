@@ -1,6 +1,7 @@
 class Song #< ActiveRecord::Base
   include Syllablizer
   include RhymingEngine
+  include Formatter
   attr_reader :lyrics, :text
 
   def initialize(text)
@@ -11,6 +12,7 @@ class Song #< ActiveRecord::Base
 private
   def songify(text)
     syllablized_text = syllablize(text)
-    rhyming_engine(syllablized_text)
+    rhymed_text = rhyming_engine(syllablized_text)
+    format_text(rhymed_text)
   end
 end
