@@ -5,6 +5,7 @@ gem 'sqlite3'
 gem 'simple_form'
 gem 'odyssey'
 gem 'jquery-rails'
+gem 'httparty'
 
 
 group :assets do
@@ -14,6 +15,7 @@ group :assets do
 end
 
 group :development do
+  gem 'rspec-rails'
   gem "better_errors"
   gem "binding_of_caller"
 end

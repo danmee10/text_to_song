@@ -2,10 +2,14 @@
   <br/>
   <br/>
 
-<% if @song%>
-  <% @song.lyrics.each do |pair| %>
-    <%= pair %>
+  <% if @song %>
+  <% @song.lyrics.each_with_index do |pair, index| %>
+    <%= "#{index + 1}) #{pair} -- #{@song.syllable_count(pair.join(' '))}" %>
+    <br/>
   <% end %>
+  <br/>
+  <br/>
+  <%= @song.lyrics.length %>
   <br/>
   <br/>
   <%= @song.text %>
