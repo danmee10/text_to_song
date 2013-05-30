@@ -4,8 +4,13 @@ module RhymingEngine
     line_pairs = breakdown.each_slice(2).to_a
     #change the last word of the second to rhyme with the last word of the first
     line_pairs.collect do |pair|
-      rhyme_last_words(pair)
+      check_for_rhyming_matches(pair)
     end
+  end
+
+  def check_for_rhyming_matches(pair)
+    pair[0].collect { |word| rhyme_brain(word) }
+    fail
   end
 
   def rhyme_last_words(pair)
@@ -24,25 +29,28 @@ module RhymingEngine
       word
     else
       #look up word in the thesaurus
-      if word.split(//).all? { |l| l.match(/[a-z]/) }
+      if word.split(//).all? { |l| l.match(/[a-zA-Z]/) }
         synonyms = thesaurus(word)
       else
         synonyms = word
       end
       #look up base_word in rhyming dictionary
-      if base_word.split(//).all? { |l| l.match(/[a-z]/) }
+      if base_word.split(//).all? { |l| l.match(/[a-zA-Z]/) }
         rhymes = rhyme_brain(base_word)
       else
         rhymes = word
       end
       #return the first match between the two results with closest number of syllables
-      if synonyms == [] || rhymes == [] || synonyms.class == String || rhymes.class == String
-        word
+      if synonyms == [] && rhymes == [] || synonyms.class == String && rhymes.class == String
+        rhymes.first
       else
-        matches = synonyms.select { |word| rhymes.include?(word) }
-        matches.first
+        look_for_matches(synonyms, rhymes)
       end
     end
+  end
+
+  def look_for_matches(synonyms, rhymes)
+    rhymes.first
   end
 
   def thesaurus(word)

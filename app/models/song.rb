@@ -17,7 +17,7 @@ class Song #< ActiveRecord::Base
 private
   def songify(text)
     syllablized_text = syllablize(text)
-    # rhymed_text = rhyming_engine(syllablized_text)
+    rhymed_text = rhyming_engine(syllablized_text)
     # format_text(rhymed_text)
   end
 end
