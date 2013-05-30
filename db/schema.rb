@@ -13,25 +13,25 @@
 
 ActiveRecord::Schema.define(:version => 20130530172044) do
 
-  create_table "rhyming_matches", :force => true do |t|
+  create_table "rhyming_relationships", :force => true do |t|
     t.integer  "word_id"
-    t.integer  "rhyming_match_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "rhyme_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "rhyming_matches", ["rhyming_match_id"], :name => "index_rhyming_matches_on_rhyming_match_id"
-  add_index "rhyming_matches", ["word_id"], :name => "index_rhyming_matches_on_word_id"
+  add_index "rhyming_relationships", ["rhyme_id"], :name => "index_rhyming_relationships_on_rhyme_id"
+  add_index "rhyming_relationships", ["word_id"], :name => "index_rhyming_relationships_on_word_id"
 
-  create_table "synonyms", :force => true do |t|
+  create_table "synonym_relationships", :force => true do |t|
     t.integer  "word_id"
     t.integer  "synonym_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "synonyms", ["synonym_id"], :name => "index_synonyms_on_synonym_id"
-  add_index "synonyms", ["word_id"], :name => "index_synonyms_on_word_id"
+  add_index "synonym_relationships", ["synonym_id"], :name => "index_synonym_relationships_on_synonym_id"
+  add_index "synonym_relationships", ["word_id"], :name => "index_synonym_relationships_on_word_id"
 
   create_table "words", :force => true do |t|
     t.string   "spelling"

@@ -5,5 +5,5 @@ class Word < ActiveRecord::Base
   validates_uniqueness_of :part_of_speech, :scope => :spelling
 
   has_many :synonyms
-  has_many :friends, :through => :synonyms
+  has_many :synonym, :through => :synonyms
 end
