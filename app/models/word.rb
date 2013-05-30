@@ -1,5 +1,7 @@
 class Word < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :spelling, :syllable_count, :checked_to_dictionary
+
+
   validates :spelling, presence: :true
   validates_uniqueness_of :spelling, :scope => :part_of_speech
   validates_uniqueness_of :part_of_speech, :scope => :spelling

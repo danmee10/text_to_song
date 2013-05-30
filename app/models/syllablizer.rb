@@ -29,9 +29,13 @@ module Syllablizer
   end
 
   def syllable_count(word)
-    #first check to see if the word has been stored in the db with its
-    #syllable count checked to a dictionary
-    Odyssey.flesch_kincaid_re("#{word}", true)["syllable_count"]
+    existing_word = Word.find_by_spelling(word)
+    if existing_word && existing_word.syllable_count
+      existing_word.syllable_count
+    else
+      new_word = Word.create(spelling: word, syllable_count: Odyssey.flesch_kincaid_re("#{word}", true)["syllable_count"])
+      new_word.syllable_count
+    end
   end
 
   def numbers_to_text
