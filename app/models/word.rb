@@ -6,6 +6,8 @@ class Word < ActiveRecord::Base
   validates_uniqueness_of :spelling, :scope => :part_of_speech
   validates_uniqueness_of :part_of_speech, :scope => :spelling
 
+  has_and_belongs_to_many :lines
+
   has_many :synonym_relationships
   has_many :synonyms, :through => :synonym_relationships
   has_many :rhyming_relationships

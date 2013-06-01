@@ -12,4 +12,13 @@ module Formatter
   def normalize_text(text)
     text.split.select { |word| word.match(/[a-zA-Z]+/)}
   end
+
+  def numbers_to_text
+  end
+
+  def abbreviations_to_text
+  end
+
+  def symbols_to_text
+  end
 end

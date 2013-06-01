@@ -5,6 +5,8 @@ class SongsController < ApplicationController
   end
 
   def create
+    # @lines = Line.new(params[:song][:original_text])
+    # @stanzas =
     @song = Song.new(params[:song])
     if @song.save
       redirect_to edit_song_path(@song.id)

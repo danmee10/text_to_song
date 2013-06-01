@@ -11,7 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601005001) do
+ActiveRecord::Schema.define(:version => 20130601030641) do
+
+  create_table "lines", :force => true do |t|
+    t.integer  "stanza_id"
+    t.integer  "max_syllables"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "lines", ["stanza_id"], :name => "index_lines_on_stanza_id"
+
+  create_table "lines_words", :force => true do |t|
+    t.integer "line_id"
+    t.integer "word_id"
+  end
+
+  add_index "lines_words", ["line_id"], :name => "index_lines_words_on_line_id"
+  add_index "lines_words", ["word_id"], :name => "index_lines_words_on_word_id"
 
   create_table "rhyming_relationships", :force => true do |t|
     t.integer  "word_id"
@@ -30,6 +47,15 @@ ActiveRecord::Schema.define(:version => 20130601005001) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "stanzas", :force => true do |t|
+    t.integer  "song_id"
+    t.integer  "max_lines"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "stanzas", ["song_id"], :name => "index_stanzas_on_song_id"
 
   create_table "synonym_relationships", :force => true do |t|
     t.integer  "word_id"

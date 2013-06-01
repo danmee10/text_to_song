@@ -1,10 +1,14 @@
 class Song < ActiveRecord::Base
-  include Syllablizer
+  include Scaffolder
   include RhymingEngine
   include Formatter
   attr_reader :text, :lyrics
   attr_accessor :lines_per_stanza, :syllables_per_line
   attr_accessible :original_text
+
+  has_many :stanzas
+  has_many :lines, :through => :stanzas
+  has_many :words, :through => :lines
 
   validates :original_text, :presence => true
   # def initialize(lines_per_stanza=4, syllables_per_line=10)
@@ -14,13 +18,13 @@ class Song < ActiveRecord::Base
   # end
 
   def lyrics
-    songify(original_text)
+    break_down(original_text)
   end
 
 private
-  def songify(text)
+  def break_down(text)
     if text && song_material?(text)
-      syllablized_text = syllablize(text)
+      syllablized_text = lines_and_stanzas(text)
       # rhymed_text = rhyming_engine(syllablized_text)
       # format_text(rhymed_text)
     elsif text
