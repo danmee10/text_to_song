@@ -29,3 +29,19 @@
 tr.stanza {
   border-bottom: solid 3px #000;
 }
+
+
+/*javascript stuff*/
+p.synonyms-tool {
+
+}
+
+.d-box {
+  border: solid 1px black;
+  background-color: #aaa;
+  width: 20px;
+}
+
+.ui-menu {
+  width: 1300px;
+}

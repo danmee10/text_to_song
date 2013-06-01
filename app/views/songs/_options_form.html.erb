@@ -1,5 +1,22 @@
 <%= simple_form_for @song do |f| %>
-  <%= f.input :syllables_per_line, label: "Max syllables per line" %>
-  <%= f.input :lines_per_stanza, label: "Max lines per stanza" %>
+  <%= f.input :syllables_per_line, label: "Syllables per line"%>
+  <%= f.input :lines_per_stanza, label: "Lines per stanza" %>
   <%= f.button :submit, 'Submit', class: "btn btn-primary" %>
 <% end %>
+
+<div class="d-box" id="word-options" title="Options">
+  <p class="word"></p>
+  <p class="tool-belt" id="synonyms">Synonyms</p>
+  <p class="tool-belt" id="rhyme-with">Rhyme-with</p>
+  <p class="tool-belt" id="replace">Replace</p>
+</div>
+
+<div class="d-box" id="synonym-box" title="Synonyms">
+  <p class="word"></p>
+  <ul>
+
+    <li></li>
+
+
+  </ul>
+</div>

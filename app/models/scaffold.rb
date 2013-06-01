@@ -1,10 +1,11 @@
 class Scaffold
   include Formatter
-  SYLLABLES_PER_LINE = 10
   attr_reader :lines, :stanzas
 
-  def initialize(text, song_id)
+  def initialize(text, song_id, syllables_per_line=10, lines_per_stanza=4)
     @song_id = song_id
+    @syllables_per_line = syllables_per_line
+    @lines_per_stanza = lines_per_stanza
     @lines = text_to_lines(text)
     @stanzas = lines_to_stanzas(@lines)
   end
@@ -14,7 +15,7 @@ class Scaffold
     line = Line.create
     lines_array = []
     words.collect do |word|
-      if (line.syllables + word.syllable_count) <= SYLLABLES_PER_LINE
+      if (line.syllables + word.syllable_count) <= @syllables_per_line
         line.words << word
       else
         lines_array << line
@@ -30,7 +31,7 @@ class Scaffold
 
   def lines_to_stanzas(lines)
     stanzas_array = []
-    lines.each_slice(4).collect do |four_line_group|
+    lines.each_slice(@lines_per_stanza).collect do |four_line_group|
       stanza = Stanza.create(song_id: @song_id)
       four_line_group.each do |line|
         stanza.lines << line

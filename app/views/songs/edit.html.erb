@@ -4,17 +4,20 @@
       <%= render "options_form" %>
     </div>
     <div class="span6">
-          <% @song.stanzas.each do |stanza| %>
+          <% @song.stanzas.each_with_index do |stanza, index| %>
         <table class="table">
             <% stanza.lines.each do |line| %>
             <tr>
-              <td><%= line.words.collect {|word| word.to_s } %></td>
+              <td class="line menu">
+                <% line.words.collect do |word| %>
+               <span id=<%="#{word.id}"%>><%= word.to_s %></span>
+               <% end %>
+              </td>
               <td><%= line.syllables %></td>
             </tr>
             <% end %>
-            <tr><td><br/><td></tr>
-            <%#fail%>
         </table>
+            <br/>
           <% end %>
     </div>
   </div>
