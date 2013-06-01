@@ -1,7 +1,18 @@
-<h2>Enter your boring text below!!!</h2>
+<div class="container">
+  <div class="row">
+    <div class="span12 text-center"><h2>Enter your boring text below!!!</h2></div>
+  </div>
+  <div class="row">
+    <div class="span12 text-center">
+      <%= simple_form_for @text do |f| %>
+        <%= f.input_field :text, as: :text %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12 text-center ">
+        <%= f.button :submit, 'Songify!', class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
 
 
-<%= simple_form_for @text do |f| %>
-  <%= f.input_field :text, as: :text %>
-  <%= f.submit 'Songify!' %>
-<% end %>

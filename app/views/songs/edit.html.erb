@@ -1,0 +1,18 @@
+    <div class="span6">
+      <% if @song && @song.lyrics %>
+        <table class="table">
+          <% @song.lyrics.each_with_index do |pair, index| %>
+            <tr>
+              <td><%="#{index + 1})"%></td>
+              <td><%="#{pair}" %></td>
+              <td><%="#{@song.syllable_count(pair.join(' '))}" %></td>
+            </tr>
+          <% end %>
+        </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12"><%= @song.text %></div>
+  </div>
+      <%end%>
+</div>

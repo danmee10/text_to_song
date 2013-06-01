@@ -1,5 +1,6 @@
 module Syllablizer
-  SYLLABLES_PER_LINE = 5
+  include Formatter
+  SYLLABLES_PER_LINE = 10
 
   def syllablize(text)
     ##add condition that looks up synonyms with appropriate number of syllables
@@ -30,10 +31,6 @@ module Syllablizer
         memo
       end
     end
-  end
-
-  def normalize_text(text)
-    text.split.select { |word| word.match(/[a-zA-Z]+/)}
   end
 
   def syllable_count(word)

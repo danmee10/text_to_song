@@ -8,4 +8,8 @@ module Formatter
       end
     end
   end
+
+  def normalize_text(text)
+    text.split.select { |word| word.match(/[a-zA-Z]+/)}
+  end
 end

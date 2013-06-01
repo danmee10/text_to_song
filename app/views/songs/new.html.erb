@@ -1,37 +1,4 @@
-<%= render "form" %>
-  <br/>
-  <br/>
+<div class="container">
+  <div class="row">
+    <div class="span12 text-center"><%= render "form" %></div>
 
-  <% if @song && @song.lyrics %>
-  <% @song.lyrics.each_with_index do |pair, index| %>
-    <%= "#{index + 1}) #{pair} -- #{@song.syllable_count(pair.join(' '))}" %>
-    <br/>
-  <% end %>
-  <br/>
-  <br/>
-  <%= @song.lyrics.length %>
-  <br/>
-  <br/>
-  <%= @song.text %>
-<%end%>
-
-
-
-
-
-<% if false %>
-  <% @song.lyrics.each do |pair| %>
-    <%if pair.class == String %>
-      <% pair.upcase %>
-    <% else %>
-      <% pair.each do |line| %>
-        <% if line.class != String %>
-          <%= line.join(" ") %>
-          <br/>
-        <%else%>
-          <%= line %>
-        <% end %>
-      <%end%>
-    <%end%>
-  <%end%>
-  <%end%>

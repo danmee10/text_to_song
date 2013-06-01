@@ -1,7 +1,7 @@
 module RhymingEngine
 
   def rhyming_engine(syllable_breakdown)
-    if syllable_breakdown.length <= 2
+    if syllable_breakdown.length == 2
       highlight_existing_rhyming_matches(syllable_breakdown)
     else
       line_pairs = syllable_breakdown.each_slice(2).to_a
@@ -103,40 +103,3 @@ module RhymingEngine
     #check to see if word already exists in base_word's rhyming matches
   end
 end
-
-###---------service methods---------###
-  # def rhyme_last_words(pair)
-  #   if pair.length == 1
-  #     pair[0]
-  #   else
-  #     line_one = pair[0]
-  #     line_two = pair[1]
-  #     line_two[-1] = rhyme(line_two[-1], line_one[-1])
-  #     [line_one, line_two]
-  #   end
-  # end
-
-  # def rhyme(word, base_word)
-  #   if rhyming_pair?(word, base_word)
-  #     word
-  #   else
-  #     #look up word in the thesaurus
-  #     if word.split(//).all? { |l| l.match(/[a-zA-Z]/) }
-  #       synonyms = thesaurus(word)
-  #     else
-  #       synonyms = word
-  #     end
-  #     #look up base_word in rhyming dictionary
-  #     if base_word.split(//).all? { |l| l.match(/[a-zA-Z]/) }
-  #       rhymes = rhyme_brain(base_word)
-  #     else
-  #       rhymes = word
-  #     end
-  #     #return the first match between the two results with closest number of syllables
-  #     if synonyms == [] && rhymes == [] || synonyms.class == String && rhymes.class == String
-  #       rhymes.first
-  #     else
-  #       look_for_matches(synonyms, rhymes)
-  #     end
-  #   end
-  # end

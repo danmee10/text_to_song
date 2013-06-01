@@ -7,8 +7,54 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">PoemBuilder</a>
+        <div class="nav-collapse">
+          <form class="navbar-search pull-right">
+            <input type="text" class="search-query" placeholder="Search Public Songs">
+          </form>
+          <ul class="nav pull-right">
+            <li><%= link_to "Login" %></li>
+            <li><%= link_to "Sign up" %></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <%= yield %>
+  <div class="navbar navbar-fixed-bottom">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
 
+        <div class="nav-collapse">
+          <div class="bottom-bar">
+            <div class="row">
+              <div class="span6 text-left">
+                  Rhyming service provided by: <%= link_to "RhymeBrain", "http://www.rhymebrain.com" %>
+                  <br/>
+                  Thesaurus service provided by: <%= link_to "words.bighugelabs.com", "http://words.bighugelabs.com" %>
+              </div>
+              <div class="span6 text-right about-us">
+                 <%= link_to "About Us" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
