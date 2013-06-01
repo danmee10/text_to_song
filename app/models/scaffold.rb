@@ -1,27 +1,41 @@
-module Scaffolder
+class Scaffold
   include Formatter
   SYLLABLES_PER_LINE = 10
+  attr_reader :lines, :stanzas
 
-  def lines_and_stanzas(text)
-    ##add condition that looks up synonyms with appropriate number of syllables
-    ##when the last word in a line would push the total line syllables
-    ##over the set abount --- lots to think about here (total reorganization)
+  def initialize(text, song_id)
+    @lines = text_to_lines(text)
+    @stanzas = lines_to_stanzas(@lines)
+    @song_id = song_id
+  end
 
+  def text_to_lines(text)
     words = text_to_word_objects(text)
     line = Line.create
-    lines_array = words.collect do |word|
-      #put 10syls of words in a line
-      while line.syllables < SYLLABLES_PER_LINE
+    lines_array = []
+    words.collect do |word|
+      if (line.syllables + word.syllable_count) <= SYLLABLES_PER_LINE
         line.words << word
+      else
+        lines_array << line
+        line = Line.create
+        line.words = [word]
       end
-      line = Line.create
+      if word = words.last
+        lines_array << line
+      end
     end
-    #put 4 lines in a stanza
-    stanzas_array = lines_array.each_slice(4).collect do |four_line_group|
-      Stanza.create.lines << four_line_group
+    lines_array
+  end
+
+  def lines_to_stanzas(lines)
+      lines.each_slice(4).collect do |four_line_group|
+      stanza = Stanza.create(song_id: @song_id)
+      four_line_group.each do |line|
+        stanza.lines << line
+      end
+      stanza
     end
-    #return array of stanzas
-    return stanzas_array
   end
 
   def syllable_count(word)

@@ -1,5 +1,5 @@
 class Song < ActiveRecord::Base
-  include Scaffolder
+  # include Scaffolder
   include RhymingEngine
   include Formatter
   attr_reader :text, :lyrics
@@ -16,6 +16,7 @@ class Song < ActiveRecord::Base
   #   @lines_per_stanza = lines_per_stanza
   #   @syllables_per_line = syllables_per_line
   # end
+
 
   def lyrics
     break_down(original_text)

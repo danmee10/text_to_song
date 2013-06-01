@@ -12,4 +12,9 @@ class Word < ActiveRecord::Base
   has_many :synonyms, :through => :synonym_relationships
   has_many :rhyming_relationships
   has_many :rhymes, :through => :rhyming_relationships
+
+
+  def to_s
+    spelling
+  end
 end

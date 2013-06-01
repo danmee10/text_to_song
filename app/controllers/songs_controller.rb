@@ -5,13 +5,13 @@ class SongsController < ApplicationController
   end
 
   def create
-    # @lines = Line.new(params[:song][:original_text])
-    # @stanzas =
     @song = Song.new(params[:song])
+    @scaffold = Scaffold.new(params[:song][:original_text], @song.id)
+    # @song.lines = @scaffold.lines
+    @song.stanzas = @scaffold.stanzas
     if @song.save
       redirect_to edit_song_path(@song.id)
     else
-      fail
       flash[:error] = "Please enter text"
       redirect_to root_path
     end

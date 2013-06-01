@@ -5,12 +5,14 @@
     </div>
     <div class="span6">
         <table class="table">
-          <% @song.lyrics.each_with_index do |line, index| %>
+          <% @song.stanzas.each do |stanza| %>
+            <% stanza.lines.each do |line| %>
             <tr>
-              <td><%="#{index + 1})"%></td>
-              <td><%="#{line}" %></td>
-              <td><%="#{@song.syllable_count(line.join(' '))}" %></td>
+              <td><%= line.words.collect {|word| word.to_s } %></td>
+              <td><%= line.syllables %></td>
+              <%#fail%>
             </tr>
+            <% end %>
           <% end %>
         </table>
     </div>
