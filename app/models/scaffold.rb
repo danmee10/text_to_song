@@ -4,9 +4,9 @@ class Scaffold
   attr_reader :lines, :stanzas
 
   def initialize(text, song_id)
+    @song_id = song_id
     @lines = text_to_lines(text)
     @stanzas = lines_to_stanzas(@lines)
-    @song_id = song_id
   end
 
   def text_to_lines(text)
@@ -25,17 +25,19 @@ class Scaffold
         lines_array << line
       end
     end
-    lines_array
+    lines_array.uniq
   end
 
   def lines_to_stanzas(lines)
-      lines.each_slice(4).collect do |four_line_group|
+    stanzas_array = []
+    lines.each_slice(4).collect do |four_line_group|
       stanza = Stanza.create(song_id: @song_id)
       four_line_group.each do |line|
         stanza.lines << line
       end
-      stanza
+      stanzas_array << stanza
     end
+    stanzas_array
   end
 
   def syllable_count(word)

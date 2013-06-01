@@ -25,3 +25,7 @@
 #margin-override {
   margin-bottom: 0px;
 }
+
+tr.stanza {
+  border-bottom: solid 3px #000;
+}

@@ -4,17 +4,18 @@
       <%= render "options_form" %>
     </div>
     <div class="span6">
-        <table class="table">
           <% @song.stanzas.each do |stanza| %>
+        <table class="table">
             <% stanza.lines.each do |line| %>
             <tr>
               <td><%= line.words.collect {|word| word.to_s } %></td>
               <td><%= line.syllables %></td>
-              <%#fail%>
             </tr>
             <% end %>
-          <% end %>
+            <tr><td><br/><td></tr>
+            <%#fail%>
         </table>
+          <% end %>
     </div>
   </div>
   </div>

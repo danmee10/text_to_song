@@ -5,7 +5,7 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = Song.new(params[:song])
+    @song = Song.create(params[:song])
     @scaffold = Scaffold.new(params[:song][:original_text], @song.id)
     # @song.lines = @scaffold.lines
     @song.stanzas = @scaffold.stanzas
