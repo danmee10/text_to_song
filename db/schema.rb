@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530172044) do
+ActiveRecord::Schema.define(:version => 20130601005001) do
 
   create_table "rhyming_relationships", :force => true do |t|
     t.integer  "word_id"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(:version => 20130530172044) do
 
   add_index "rhyming_relationships", ["rhyme_id"], :name => "index_rhyming_relationships_on_rhyme_id"
   add_index "rhyming_relationships", ["word_id"], :name => "index_rhyming_relationships_on_word_id"
+
+  create_table "songs", :force => true do |t|
+    t.string   "title"
+    t.string   "original_text"
+    t.string   "edited_text"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "synonym_relationships", :force => true do |t|
     t.integer  "word_id"

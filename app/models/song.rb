@@ -4,12 +4,14 @@ class Song < ActiveRecord::Base
   include Formatter
   attr_reader :text, :lyrics
   attr_accessor :lines_per_stanza, :syllables_per_line
+  attr_accessible :original_text
 
-  def initialize(text, lines_per_stanza=4, syllables_per_line=10)
-    @text = text
-    @lines_per_stanza = lines_per_stanza
-    @syllables_per_line = syllables_per_line
-  end
+  validates :original_text, :presence => true
+  # def initialize(lines_per_stanza=4, syllables_per_line=10)
+  #   @text = text
+  #   @lines_per_stanza = lines_per_stanza
+  #   @syllables_per_line = syllables_per_line
+  # end
 
   def lyrics
     @lyrics = songify(text)
