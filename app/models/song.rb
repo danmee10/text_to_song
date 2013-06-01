@@ -14,7 +14,7 @@ class Song < ActiveRecord::Base
   # end
 
   def lyrics
-    @lyrics = songify(text)
+    songify(original_text)
   end
 
 private

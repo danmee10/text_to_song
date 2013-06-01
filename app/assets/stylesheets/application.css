@@ -21,3 +21,7 @@
 .about-us {
   padding-top: 10px;
 }
+
+#margin-override {
+  margin-bottom: 0px;
+}
