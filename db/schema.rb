@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602171515) do
+ActiveRecord::Schema.define(:version => 20130602191541) do
 
   create_table "alt_spellings", :force => true do |t|
     t.string   "alt_spelling"
@@ -22,11 +22,20 @@ ActiveRecord::Schema.define(:version => 20130602171515) do
 
   add_index "alt_spellings", ["word_id"], :name => "index_alt_spellings_on_word_id"
 
+  create_table "alt_spellings_lines", :force => true do |t|
+    t.integer "line_id"
+    t.integer "alt_spelling_id"
+  end
+
+  add_index "alt_spellings_lines", ["alt_spelling_id"], :name => "index_alt_spellings_lines_on_alt_spelling_id"
+  add_index "alt_spellings_lines", ["line_id"], :name => "index_alt_spellings_lines_on_line_id"
+
   create_table "lines", :force => true do |t|
     t.integer  "stanza_id"
     t.integer  "max_syllables"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.string   "content_array_string"
   end
 
   add_index "lines", ["stanza_id"], :name => "index_lines_on_stanza_id"

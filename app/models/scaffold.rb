@@ -18,11 +18,19 @@ class Scaffold
 
 
       if (line.syllables + word.syllable_count) <= @syllables_per_line
-        line.words << word
+        if word.class == Word
+          line.words << word
+        else
+          line.alt_spellings << word
+        end
       else
         lines_array << line
         line = Line.create
-        line.words = [word]
+        if word.class == Word
+          line.words = [word]
+        else
+          line.alt_spellings = [word]
+        end
       end
 
       if word = words.last
@@ -46,10 +54,6 @@ class Scaffold
     stanzas_array
   end
 
-  def syllable_count(word)
-    Odyssey.flesch_kincaid_re("#{word}", true)["syllable_count"]
-  end
-
   def text_to_word_objects(text)
     ##returns an array of word and alt_spelling objects
     ##as well as the original punctuation interspersed
@@ -61,35 +65,12 @@ class Scaffold
         word += char
         ""
       else
-        word_with_break = [objectify(word), char]
+        word_with_break = [Formatter.objectify_word(word), Formatter.objectify_character(char)]
         word = ''
-        word_with_break.join
+        word_with_break
       end
     end
-    objectified_text_array
-  end
-
-  def objectify(word)
-    existing_word_object = Word.find_by_spelling(word)
-    if existing_word_object
-      existing_word_object
-    elsif word != word.downcase
-      if Word.find_by_spelling(word.downcase)
-        AltSpelling.find_or_create(alt_spelling: word, word_id: Word.find_by_spelling(word.downcase).id)
-      else
-        new_word = Word.create(spelling: word.downcase)
-        AltSpelling.new(alt_spelling: word, word_id: new_word.id)
-      end
-    else
-      Word.create(spelling: word)
-    end
-  end
-
-  def lowercase_letters_only(word)
-    letters = word.char.collect do |char|
-      char.match(/[a-zA-Z]/)
-    end
-    letters.join.downcase
+    objectified_text_array.delete_if { |x| x == "" }.flatten
   end
 end
 

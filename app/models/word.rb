@@ -2,21 +2,29 @@ class Word < ActiveRecord::Base
   attr_accessible :spelling, :syllable_count, :checked_to_dictionary
 
 
-  validates :spelling, presence: :true
+  validates :spelling, presence: :true, :unless => :space?
   validates_uniqueness_of :spelling, :scope => :part_of_speech
   validates_uniqueness_of :part_of_speech, :scope => :spelling
 
   has_and_belongs_to_many :lines
+  has_many :alt_spellings
 
   has_many :synonym_relationships
   has_many :synonyms, :through => :synonym_relationships
   has_many :rhyming_relationships
   has_many :rhymes, :through => :rhyming_relationships
-  has_many :alt_spellings
 
 
   def to_s
     spelling
+  end
+
+  def space?
+    spelling == " "
+  end
+
+  def self.syllable_count(word)
+    Odyssey.flesch_kincaid_re("#{word}", true)["syllable_count"]
   end
 
   def rhyming_matches
