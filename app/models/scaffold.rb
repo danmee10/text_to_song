@@ -15,6 +15,8 @@ class Scaffold
     line = Line.create
     lines_array = []
     words.collect do |word|
+
+
       if (line.syllables + word.syllable_count) <= @syllables_per_line
         line.words << word
       else
@@ -22,9 +24,12 @@ class Scaffold
         line = Line.create
         line.words = [word]
       end
+
       if word = words.last
         lines_array << line
       end
+
+
     end
     lines_array.uniq
   end
@@ -46,45 +51,57 @@ class Scaffold
   end
 
   def text_to_word_objects(text)
-    text.split.collect do |word|
-      existing_word = Word.find_by_spelling(word)
-      if existing_word
-        existing_word
+    ##returns an array of word and alt_spelling objects
+    ##as well as the original punctuation interspersed
+    letter = ''
+    word = ''
+    objectified_text_array = text.split(//).collect do |character|
+      char = character
+      if char.match(/[a-zA-Z]/)
+        word += char
+        ""
       else
-        Word.create(spelling: word, syllable_count: Odyssey.flesch_kincaid_re("#{word}", true)["syllable_count"])
+        word_with_break = [objectify(word), char]
+        word = ''
+        word_with_break.join
       end
     end
+    objectified_text_array
+  end
+
+  def objectify(word)
+    existing_word_object = Word.find_by_spelling(word)
+    if existing_word_object
+      existing_word_object
+    elsif word != word.downcase
+      if Word.find_by_spelling(word.downcase)
+        AltSpelling.find_or_create(alt_spelling: word, word_id: Word.find_by_spelling(word.downcase).id)
+      else
+        new_word = Word.create(spelling: word.downcase)
+        AltSpelling.new(alt_spelling: word, word_id: new_word.id)
+      end
+    else
+      Word.create(spelling: word)
+    end
+  end
+
+  def lowercase_letters_only(word)
+    letters = word.char.collect do |char|
+      char.match(/[a-zA-Z]/)
+    end
+    letters.join.downcase
   end
 end
 
-##working method...pre-object nonsense
-  # def lines_and_stanzas(text)
-  #   ##add condition that looks up synonyms with appropriate number of syllables
-  #   ##when the last word in a line would push the total line syllables
-  #   ##over the set abount --- lots to think about here (total reorganization)
-  #   return [] unless text
-  #   words_array = normalize_text(text)
 
-  #   # return words_array if words_array.length == 1
-  #   line = []
-  #   syllables = 0
-  #   words_array.inject([]) do |memo, word|
-  #     syllables += syllable_count(word)
-  #     if syllables <= SYLLABLES_PER_LINE
-  #       line << word
+  # def text_to_word_objects(text)
+  #   text.split.collect do |word|
+  #     normalized_word = lowercase_letters_only(word)
+  #     existing_word = Word.find_by_spelling(normalized_word)
+  #     if existing_word
+  #       existing_word
   #     else
-  #       syllables = syllable_count(word)
-  #       memo << line
-  #       line = [word]
-  #     end
-  #     if word == text.split.last && line != [word]
-  #       memo << line
-  #       memo
-  #     elsif word == text.split.last
-  #       memo << [word]
-  #       memo
-  #     else
-  #       memo
+  #       Word.create(spelling: normalized_word, syllable_count: Odyssey.flesch_kincaid_re("#{normalized_word}", true)["syllable_count"])
   #     end
   #   end
   # end

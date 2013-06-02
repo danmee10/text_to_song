@@ -6,6 +6,7 @@ gem 'simple_form'
 gem 'odyssey'
 gem 'jquery-rails'
 gem 'httparty'
+gem 'figaro'
 
 
 group :assets do

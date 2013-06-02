@@ -9,7 +9,7 @@
             <% stanza.lines.each do |line| %>
             <tr>
               <td class="line menu">
-                <% line.words.collect do |word| %>
+                <% line.words.each do |word| %>
                <span id=<%="#{word.id}"%>><%= word.to_s %></span>
                <% end %>
               </td>

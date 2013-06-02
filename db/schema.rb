@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601030641) do
+ActiveRecord::Schema.define(:version => 20130602171515) do
+
+  create_table "alt_spellings", :force => true do |t|
+    t.string   "alt_spelling"
+    t.integer  "word_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "alt_spellings", ["word_id"], :name => "index_alt_spellings_on_word_id"
 
   create_table "lines", :force => true do |t|
     t.integer  "stanza_id"

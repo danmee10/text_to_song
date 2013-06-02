@@ -34,7 +34,8 @@ $(document).ready(function() {
     $( "td.line > span" ).click(function() {
       $( "#word-options" ).dialog( "open" );
       $( "#word-options > p.word" ).text( $(this).text() + ":").css({"text-transform": "capitalize",
-                                                                  "font-weight": "bold"});
+                                                                        "font-weight": "bold"});
+      $("#word-options > p.word-id" ).text(this.id).hide()
     });
   });
 
@@ -55,9 +56,18 @@ $(document).ready(function() {
     });
 
     $( "#synonyms" ).click(function() {
+      var wordId = $(this).siblings("p.word-id").text()
       $( "#synonym-box" ).dialog( "open" );
       $( "#synonym-box > p.word" ).text( "Synonyms for " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
-                                                                                              "font-weight": "bold"});
+                                                                                                       "font-weight": "bold"});
+      $.getJSON("/api/words/" + wordId + ".json", function(data){
+        var html =''
+        $.each(data.synonyms, function(entryIndex, entry) {
+          html += '<li>' + entry.spelling + '</li>';
+        });
+        $('ul.synonyms').html(html);
+      });
+      return false
     });
   });
 

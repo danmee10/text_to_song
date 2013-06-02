@@ -66,38 +66,6 @@ module RhymingEngine
     array_of_strings.collect { |string| Word.find_by_spelling(string) }
   end
 
-  def thesaurus(word)
-    key = ENV['THESAURUS_KEY']
-    full_response = HTTParty.get("http://words.bighugelabs.com/api/2/#{key}/#{word}/json")
-    unless full_response.body == ''
-      thesaurus_parser(full_response)
-    else
-      word
-    end
-  end
-
-  def thesaurus_parser(response)
-    if response['noun'] && response['verb']
-      response['noun']['syn'] + response['verb']['syn']
-    elsif response['noun']
-      response['noun']['syn']
-    elsif response['verb']
-      response['verb']['syn']
-    else
-      []
-    end
-  end
-
-  def rhyme_brain(word)
-    full_response = HTTParty.get("http://rhymebrain.com/talk?function=getRhymes&word=#{word}")
-    rhyme_brain_parser(full_response)
-  end
-
-  def rhyme_brain_parser(response)
-    real_words = response.select { |rhyme| rhyme["flags"].to_s.match(/b/) != nil }
-    real_words.collect { |rhyme| {word: rhyme["word"], syllables: rhyme["syllables"].to_i} }
-  end
-
   def rhyming_pair?(word, base_word)
     false
     #check to see if word already exists in base_word's rhyming matches
