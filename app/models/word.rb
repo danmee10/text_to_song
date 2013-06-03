@@ -1,5 +1,5 @@
 class Word < ActiveRecord::Base
-  attr_accessible :spelling, :syllable_count, :checked_to_dictionary
+  attr_accessible :spelling, :syllable_count, :checked_to_dictionary, :part_of_speech
 
 
   validates :spelling, presence: :true, :unless => :space?
