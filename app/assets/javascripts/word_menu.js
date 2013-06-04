@@ -25,7 +25,20 @@ $(document).ready(function() {
     });
     //open options table
     $( "td.line > span" ).click(function() {
-      $( "#word-options" ).dialog( "open" );
+      // $( "#word-options" ).dialog( "open" );
+
+      $( this ).popover({
+        trigger: 'click',
+          html : true,
+        content: function () {
+                   return $('#tool-buttons').html();
+                 }
+      });
+
+
+
+
+
       $( "#word-options > p.word" ).text( $(this).text() + ":").css({"text-transform": "capitalize",
                                                                         "font-weight": "bold"});
       $("#word-options > p.word-id" ).text(this.id).hide();
