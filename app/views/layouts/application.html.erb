@@ -2,9 +2,12 @@
 <html>
 <head>
   <title>PoetToKnowIt</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+<!-- , :media => "all"  cut out of stylesheet_link_tag, after "application"-->
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">

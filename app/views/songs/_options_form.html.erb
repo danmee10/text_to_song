@@ -26,8 +26,8 @@
 
 <div class="d-box" id="replace" title="Replace">
   <p class="word"></p>
-  <%= simple_form_for @song.lines.first do |f| %>
-    <%= f.input :words, label: false, placeholder: false%>
-    <%= f.button :submit, 'Replace!', class: "btn btn-primary" %>
-  <% end %>
+  <div class="input-append">
+    <input type="text" class="span2" id="appendedInputButton" >
+    <button class="btn" type="button" id="replace-button" value="Replace!" ></button>
+  </div>
 </div>

@@ -76,6 +76,7 @@ $(document).ready(function() {
                     dataType: "json"
                   });
             $(this).css("font-weight", "bold");
+            $( "#synonym-box" ).dialog( "close" );
           });
         });
       });
@@ -124,6 +125,7 @@ $(document).ready(function() {
                     dataType: "json"
                   });
             $(this).css("font-weight", "bold");
+            $( "#rhyme-box" ).dialog( "close" );
           });
         });
       });
@@ -150,10 +152,20 @@ $(document).ready(function() {
 
     //open replacement form
     $( "#replace-with" ).click(function() {
-      var wordId = $(this).siblings("p.word-id").text()
+      var wordId = $(this).siblings("p.word-id").text();
+      var lineId = $(this).siblings("p.line-id").text();
       $( "#replace" ).dialog( "open" );
       $( "#replace > p.word" ).text( "Replace " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
                                                                                               "font-weight": "bold"});
+      $('#replace-button').click(function() {
+        $.ajax({
+          type: "PUT",
+          url: "/api/lines/" + lineId + ".json",
+          data: { old_word: wordId, new_word: $("#appendedInputButton").val() },
+          dataType: "json"
+        });
+        $( "#replace" ).dialog( "close" );
+      });
     });
   });
 
