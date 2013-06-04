@@ -8,6 +8,7 @@
   <p class="word"></p>
   <p class="word-id"></p>
   <p class="line-index"></p>
+  <p class="line-id"></p>
   <p class="tool-belt" id="synonyms">Synonyms</p>
   <p class="tool-belt" id="rhyme-with">Rhyme-with</p>
   <p class="tool-belt" id="replace-with">Replace</p>
@@ -25,9 +26,8 @@
 
 <div class="d-box" id="replace" title="Replace">
   <p class="word"></p>
-  <%= simple_form_for @song.lines[0] do |f| %>
+  <%= simple_form_for @song.lines.first do |f| %>
     <%= f.input :words, label: false, placeholder: false%>
-    <% f.input :max_syllables, label: false, placeholder: false%>
     <%= f.button :submit, 'Replace!', class: "btn btn-primary" %>
   <% end %>
 </div>

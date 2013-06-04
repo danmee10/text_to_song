@@ -28,8 +28,9 @@ $(document).ready(function() {
       $( "#word-options" ).dialog( "open" );
       $( "#word-options > p.word" ).text( $(this).text() + ":").css({"text-transform": "capitalize",
                                                                         "font-weight": "bold"});
-      $("#word-options > p.word-id" ).text(this.id).hide()
-      $("#word-options > p.line-index" ).text(this.class).hide()
+      $("#word-options > p.word-id" ).text(this.id).hide();
+      $("#word-options > p.line-index" ).text(this.class).hide();
+      $("#word-options > p.line-id" ).text($(this).closest("tr").attr('id')).hide();
     });
   });
 
@@ -53,7 +54,8 @@ $(document).ready(function() {
 
     //open synonyms table
     $( "#synonyms" ).click(function() {
-      var wordId = $(this).siblings("p.word-id").text()
+      var wordId = $(this).siblings("p.word-id").text();
+      var lineId = $(this).siblings("p.line-id").text();
       $( "#synonym-box" ).dialog( "open" );
       $( "#synonym-box > p.word" ).text( "Synonyms for " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
                                                                                                        "font-weight": "bold"});
@@ -67,11 +69,15 @@ $(document).ready(function() {
         //clickable synonyms
         $('ul.synonyms > li').each(function() {
           $(this).click(function() {
-            $.put
+            $.ajax({
+                    type: "PUT",
+                    url: "/api/lines/" + lineId + ".json",
+                    data: { old_word: wordId, new_word: $(this).text() },
+                    dataType: "json"
+                  });
             $(this).css("font-weight", "bold");
           });
         });
-
       });
       return false
     });
@@ -97,6 +103,7 @@ $(document).ready(function() {
     //open rhymes table
     $( "#rhyme-with" ).click(function() {
       var wordId = $(this).siblings("p.word-id").text()
+      var lineId = $(this).siblings("p.line-id").text();
       $( "#rhyme-box" ).dialog( "open" );
       $( "#rhyme-box > p.word" ).text( "Rhymes for " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
                                                                                                        "font-weight": "bold"});
@@ -110,11 +117,15 @@ $(document).ready(function() {
         //clickable rhymes
         $('ul.rhymes > li').each(function() {
           $(this).click(function() {
-            $.put
+              $.ajax({
+                    type: "PUT",
+                    url: "/api/lines/" + lineId + ".json",
+                    data: { old_word: wordId, new_word: $(this).text() },
+                    dataType: "json"
+                  });
             $(this).css("font-weight", "bold");
           });
         });
-
       });
       return false
     });
@@ -142,7 +153,7 @@ $(document).ready(function() {
       var wordId = $(this).siblings("p.word-id").text()
       $( "#replace" ).dialog( "open" );
       $( "#replace > p.word" ).text( "Replace " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
-                                                                                                       "font-weight": "bold"});
+                                                                                              "font-weight": "bold"});
     });
   });
 

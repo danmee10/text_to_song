@@ -6,17 +6,35 @@ class Word < ActiveRecord::Base
   validates_uniqueness_of :spelling, :scope => :part_of_speech
   validates_uniqueness_of :part_of_speech, :scope => :spelling
 
-  has_and_belongs_to_many :lines
-  has_many :alt_spellings
-
   has_many :synonym_relationships
   has_many :synonyms, :through => :synonym_relationships
   has_many :rhyming_relationships
   has_many :rhymes, :through => :rhyming_relationships
 
+  has_many :linewords
+  has_many :lines, :through => :linewords
+
 
   def to_s
     spelling
+  end
+
+  def self.objectify(word)
+    existing_word_object = find_by_spelling(word)
+    if existing_word_object
+      existing_word_object
+    else
+      create(spelling: word, syllable_count: syllable_count(word))
+    end
+  end
+
+  def self.objectify_character(char)
+    existing_character = find_by_spelling(char)
+    if existing_character
+      existing_character
+    else
+      create(spelling: char, syllable_count: 0, part_of_speech: "symbol")
+    end
   end
 
   def space?

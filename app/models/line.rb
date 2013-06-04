@@ -1,15 +1,15 @@
 class Line < ActiveRecord::Base
   # attr_accessible :title, :body
   belongs_to :stanza
-  has_and_belongs_to_many :words
-  has_and_belongs_to_many :alt_spellings
+  has_many :linewords
+  has_many :words, :through => :linewords
 
 
 
   def syllables
-    syllables = words.collect do |word|
-      word.syllable_count
+    words = self.words.collect do |word|
+      word.spelling
     end
-    syllables.sum
+    Word.syllable_count(words.join(" "))
   end
 end

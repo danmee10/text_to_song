@@ -65,12 +65,14 @@ class Scaffold
         word += char
         ""
       else
-        word_with_break = [Formatter.objectify_word(word), Formatter.objectify_character(char)]
+        word_with_break = [Word.objectify(word), Word.objectify_character(char)]
         word = ''
         word_with_break
       end
     end
-    objectified_text_array.delete_if { |x| x == "" }.flatten
+    objectified_text_array.flatten.delete_if do |x|
+      x == '' || x.spelling == "\r" || x.spelling == "\n" || x.spelling == ""
+    end
   end
 end
 

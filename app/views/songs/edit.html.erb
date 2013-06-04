@@ -1,3 +1,4 @@
+<h1 id="pooop"></h1>
 <div class="row">
     <div class="span6">
       <p><%= @song.original_text %></p>
@@ -7,7 +8,7 @@
           <% @song.stanzas.each_with_index do |stanza, index| %>
         <table class="table">
             <% stanza.lines.each do |line| %>
-            <tr>
+            <tr class="bitch" id=<%="#{line.id}"%>>
               <td class="line menu">
                 <% line.words.each_with_index do |word, index| %>
                <span class="#{index}" id=<%="#{word.id}"%>><%= word.to_s %></span>

@@ -25,24 +25,6 @@ module Formatter
   #   end
   # end
 
-  def self.objectify_word_or_words(word)
-    existing_word_object = Word.find_by_spelling(word)
-    if existing_word_object
-      existing_word_object
-    else
-      Word.create(spelling: word, syllable_count: Word.syllable_count(word))
-    end
-  end
-
-  def self.objectify_character(char)
-    existing_character = Word.find_by_spelling(char)
-    if existing_character
-      existing_character
-    else
-      Word.create(spelling: char, syllable_count: 0, part_of_speech: "symbol")
-    end
-  end
-
   def lowercase_letters_only(word)
     letters = word.char.collect do |char|
       char.match(/[a-zA-Z]/)
