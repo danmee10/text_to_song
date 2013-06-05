@@ -1,5 +1,5 @@
 class Lineword < ActiveRecord::Base
-  attr_accessible :word_id
+  attr_accessible :word_id, :line_id, :word_index
 
 
 

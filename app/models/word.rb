@@ -19,6 +19,27 @@ class Word < ActiveRecord::Base
     spelling
   end
 
+  def self.text_to_word_objects(text)
+    ##returns an array of word and alt_spelling objects
+    ##as well as the original punctuation interspersed
+    letter = ''
+    word = ''
+    objectified_text_array = text.split(//).collect do |character|
+      char = character
+      if char.match(/[a-zA-Z]/)
+        word += char
+        ""
+      else
+        word_with_break = [objectify(word), objectify_character(char)]
+        word = ''
+        word_with_break
+      end
+    end
+    objectified_text_array.flatten.delete_if do |x|
+      x == '' || x.spelling == "\r" || x.spelling == "\n" || x.spelling == ""
+    end
+  end
+
   def self.objectify(word)
     existing_word_object = find_by_spelling(word)
     if existing_word_object

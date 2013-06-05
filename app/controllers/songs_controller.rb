@@ -30,11 +30,11 @@ class SongsController < ApplicationController
       if @song.save
         redirect_to edit_song_path(@song.id)
       else
-        flash[:error] = "ERROR!!!"
+        flash[:error] = "Please fill out both fields, with numbers only."
         redirect_to edit_song_path(@song.id)
       end
     else
-      flash[:error] = "ERROR!!!"
+      flash[:error] = "Please fill out both fields, with numbers only."
       redirect_to edit_song_path(@song.id)
     end
   end

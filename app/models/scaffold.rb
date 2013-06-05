@@ -11,7 +11,7 @@ class Scaffold
   end
 
   def text_to_lines(text)
-    words = text_to_word_objects(text)
+    words = Word.text_to_word_objects(text)
     line = Line.create
     lines_array = []
     words.collect do |word|
@@ -53,38 +53,41 @@ class Scaffold
     end
     stanzas_array
   end
-
-  def text_to_word_objects(text)
-    ##returns an array of word and alt_spelling objects
-    ##as well as the original punctuation interspersed
-    letter = ''
-    word = ''
-    objectified_text_array = text.split(//).collect do |character|
-      char = character
-      if char.match(/[a-zA-Z]/)
-        word += char
-        ""
-      else
-        word_with_break = [Word.objectify(word), Word.objectify_character(char)]
-        word = ''
-        word_with_break
-      end
-    end
-    objectified_text_array.flatten.delete_if do |x|
-      x == '' || x.spelling == "\r" || x.spelling == "\n" || x.spelling == ""
-    end
-  end
 end
+    # <div class="span6 slide-out-div" style="line-height: 1; position: fixed; height: 290px; top: 200px; left: -300px;">
+    #   <a class="handle" href="#" style="width: 36px; height: 130px; display: block; text-indent: -99999px; outline: none; position: absolute; top: 0px; right: -36px; background-position: initial initial; background-repeat: no-repeat no-repeat;">Original Text</a>
+    #   <p><%= @song.original_text %></p>
+    # </div>
+    # <div class="span6 slide-out-div-two">
+    #   <a class="handle-two" href="#">Original Text</a>
+    #   <%= render "options_form" %>
+    # </div>
 
 
-  # def text_to_word_objects(text)
-  #   text.split.collect do |word|
-  #     normalized_word = lowercase_letters_only(word)
-  #     existing_word = Word.find_by_spelling(normalized_word)
-  #     if existing_word
-  #       existing_word
+
+
+
+  # def text_to_lines(text)
+  #   words = Word.text_to_word_objects(text)
+  #   line = Line.create
+  #   lines_array = []
+  #   line_position_index = 1
+  #   words.each do |word|
+  #     fail
+  #     if (line.syllables + word.syllable_count) <= @syllables_per_line
+  #       Lineword.create(line_id: line.id,word_id: word.id, word_index: line_position_index)
+  #       line_position_index += 1
   #     else
-  #       Word.create(spelling: normalized_word, syllable_count: Odyssey.flesch_kincaid_re("#{normalized_word}", true)["syllable_count"])
+  #       lines_array << line
+  #       line = Line.create
+  #       line_position_index = 1
+  #       Lineword.create(line_id: line.id,word_id: word.id, word_index: line_position_index)
+  #     end
+
+  #     if word = words.last
+  #       lines_array << line
   #     end
   #   end
+
+  #   lines_array.uniq
   # end

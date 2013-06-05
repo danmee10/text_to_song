@@ -35,7 +35,7 @@ tr.stanza {
 .table td#something-0 {
   border-top: none;
 }
-span.line-syllables {
+p.line-syllables {
   float: right;
 }
 
@@ -71,6 +71,27 @@ button.ui-button {
 
 .selected-word {
   font-weight: bold;
+  background-color: #0088cc;
+  color: white;
+  border-radius: 2px;
+  padding: 2px;
 }
+span:hover {
+  font-weight: bold;
+  background-color: #0088cc;
+  color: white;
+  border-radius: 2px;
+  padding: 2px;
+}
+/*.table td.menu {
+  padding: 0px;
+}*/
+.poem {
+  margin-right: 20px;
+}
+#options-original-text {
+  margin-left: 40px;
+}
+
 
 

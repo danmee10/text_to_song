@@ -1,13 +1,5 @@
 $(document).ready(function() {
 
-//highlight words yellow on hover
-  $("td.line > span").hover(function(){
-    $(this).css("background-color", "yellow");
-  },
-  function() {
-    $(this).css("background-color", "white")
-  });
-
 //popover buttons
   $('#tool-buttons').hide();
 

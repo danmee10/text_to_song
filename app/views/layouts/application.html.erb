@@ -12,13 +12,27 @@
     $(function(){
       $('.slide-out-div').tabSlideOut({
         tabHandle: '.handle',                     //class of the element that will become your tab
-        pathToTabImage: '<%= asset_path 'feedback_tabv2.png' %>', //path to the image for the tab //Optionally can be set using css
-        imageHeight: '130px',                     //height of tab image           //Optionally can be set using css
-        imageWidth: '36px',                       //width of tab image            //Optionally can be set using css
+        pathToTabImage: '<%= asset_path 'original_text_tab.png' %>', //path to the image for the tab //Optionally can be set using css
+        imageHeight: '300px',                     //height of tab image           //Optionally can be set using css
+        imageWidth: '100px',                       //width of tab image            //Optionally can be set using css
         tabLocation: 'left',                      //side of screen where tab lives, top, right, bottom, or left
         speed: 300,                               //speed of animation
         action: 'click',                          //options: 'click' or 'hover', action to trigger animation
         topPos: '100px',                          //position from the top/ use if tabLocation is left or right
+        leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
+        fixedPosition: true                      //options: true makes it stick(fixed position) on scroll
+        });
+      });
+    $(function(){
+      $('.slide-out-div-two').tabSlideOut({
+        tabHandle: '.handle-two',                     //class of the element that will become your tab
+        pathToTabImage: '<%= asset_path 'options_tab.png' %>', //path to the image for the tab //Optionally can be set using css
+        imageHeight: '300px',                     //height of tab image           //Optionally can be set using css
+        imageWidth: '100px',                       //width of tab image            //Optionally can be set using css
+        tabLocation: 'left',                      //side of screen where tab lives, top, right, bottom, or left
+        speed: 300,                               //speed of animation
+        action: 'click',                          //options: 'click' or 'hover', action to trigger animation
+        topPos: '400px',                          //position from the top/ use if tabLocation is left or right
         leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
         fixedPosition: true                      //options: true makes it stick(fixed position) on scroll
         });
@@ -41,15 +55,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="#">PoetToKnowIt</a>
+        <a class="brand" href="/">PoemEngine</a>
         <div class="nav-collapse">
-          <form class="navbar-search pull-right">
-            <input type="text" class="search-query" placeholder="Search Public Songs">
-          </form>
-          <ul class="nav pull-right">
-            <li><%= link_to "Login" %></li>
-            <li><%= link_to "Sign up" %></li>
-          </ul>
         </div>
       </div>
     </div>
@@ -68,13 +75,10 @@
         <div class="nav-collapse">
           <div class="bottom-bar">
             <div class="row">
-              <div class="span6 text-left">
+              <div class="span12 text-left">
                   Rhyming service provided by: <%= link_to "RhymeBrain", "http://www.rhymebrain.com" %>
                   <br/>
                   Thesaurus service provided by: <%= link_to "words.bighugelabs.com", "http://words.bighugelabs.com" %>
-              </div>
-              <div class="span6 text-right about-us">
-                 <%= link_to "About" %>
               </div>
             </div>
           </div>
