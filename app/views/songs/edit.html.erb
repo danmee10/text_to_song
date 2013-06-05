@@ -10,7 +10,7 @@
             <% stanza.lines.each_with_index do |line, index| %>
             <tr id=<%="#{line.id}"%>>
               <td class="line menu" id="something-<%=index%>">
-                <% line.words.each do |word| %>
+                <% line.words.reverse.each do |word| %>
                   <span id=<%="#{word.id}"%>><%= word.to_s %></span>
                 <% end %>
                 <p class="line-syllables"><%= line.syllables %></p>
