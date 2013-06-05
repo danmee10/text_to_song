@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 //highlight words yellow on hover
   $("td.line > span").hover(function(){
     $(this).css("background-color", "yellow");
@@ -7,6 +8,7 @@ $(document).ready(function() {
     $(this).css("background-color", "white")
   });
 
+//popover buttons
   $('#tool-buttons').hide();
 
 //define options popover
@@ -45,6 +47,7 @@ $(document).ready(function() {
                 replacementForm(wordId,lineId,wordUnderExamination);
               });
             });
+
 // close options popover, but only remove selected-word class if a dialog box is not open
   $("body").click(function() {
     var synonymIsOpen = $( "#synonym-box" ).dialog( "isOpen" );
@@ -56,6 +59,8 @@ $(document).ready(function() {
       $("td.line").popover('hide').children("span").removeClass("selected-word");
     }
   });
+
+//popover title
   function spanText()
   {
     return $("span.selected-word").text() + ":";
@@ -85,12 +90,16 @@ $(document).ready(function() {
           }
   });
 
+//open synonyms table
   proposeSynonyms = function(wordId,lineId,wordUnderExamination) {
     $( "#synonym-box" ).dialog( "open" );
     $( ".ui-dialog" ).addClass( "modal" );
 
     $('#synonym-box').bind('dialogclose', function(event) {
       wordUnderExamination.removeClass("selected-word");
+      $("ul.synonyms").html("<li></li>");
+      $("ul.synonyms").text("");
+      $(".progress-striped").show();
     });
 
     $( "#synonym-box > p.word" ).text( "Synonyms for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
@@ -101,7 +110,13 @@ $(document).ready(function() {
       $.each(data.synonyms, function(entryIndex, entry) {
         html += '<li class="replacement-word">' + entry.spelling + '</li>';
       });
+
+      $(".progress-striped").hide();
+
       $('ul.synonyms').html(html);
+      if ($('ul.synonyms').is(':empty')) {
+        $('ul.synonyms').text("Sorry, no synonyms found");
+      }
       //clickable synonyms
       $('ul.synonyms > li').each(function() {
         $(this).click(function() {
@@ -115,8 +130,8 @@ $(document).ready(function() {
                 });
 
           wordUnderExamination.html(newWord);
-
           $(this).css("font-weight", "bold");
+
           $( "#synonym-box" ).dialog( "close" );
         });
       });
@@ -153,6 +168,9 @@ $(document).ready(function() {
 
     $('#rhyme-box').bind('dialogclose', function(event) {
       $("span.selected-word").removeClass("selected-word");
+      $("ul.rhymes").html("<li></li>");
+      $("ul.rhymes").text("");
+      $(".progress-striped").show();
     });
 
     $( "#rhyme-box > p.word" ).text( "Rhymes for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
@@ -163,7 +181,13 @@ $(document).ready(function() {
       $.each(data.rhymes, function(entryIndex, entry) {
         html += '<li class="replacement-word">' + entry.spelling + '</li>';
       });
+
+      $(".progress-striped").hide();
+
       $('ul.rhymes').html(html);
+      if ($('ul.rhymes').is(':empty')) {
+        $('ul.rhymes').text("Sorry, no rhymes found");
+      }
       //clickable rhymes
       $('ul.rhymes > li').each(function() {
         $(this).click(function() {

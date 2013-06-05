@@ -1,23 +1,25 @@
 <h1 id="pooop"></h1>
 <div class="row">
-    <div class="span6">
+    <div class="span6 slide-out-div" style="line-height: 1; position: fixed; height: 290px; top: 200px; left: -300px;">
+      <a class="handle" href="#" style="background-image: url(http://tutorials.jumpstartlab.com/images/feedback_tabv2.png); width: 36px; height: 130px; display: block; text-indent: -99999px; outline: none; position: absolute; top: 0px; right: -36px; background-position: initial initial; background-repeat: no-repeat no-repeat;">Original Text</a>
       <p><%= @song.original_text %></p>
       <%= render "options_form" %>
     </div>
-    <div class="span6">
+    <div class="span6 pull-right">
           <% @song.stanzas.each_with_index do |stanza, index| %>
         <table class="table">
-            <% stanza.lines.each do |line| %>
-            <tr class="bitch" id=<%="#{line.id}"%>>
-              <td class="line menu">
+            <% stanza.lines.each_with_index do |line, index| %>
+            <tr id=<%="#{line.id}"%>>
+              <td class="line menu" id="something-<%=index%>">
                 <% line.words.each do |word| %>
-               <span id=<%="#{word.id}"%>><%= word.to_s %></span>
-               <% end %>
+                  <span id=<%="#{word.id}"%>><%= word.to_s %></span>
+                <% end %>
+                <span class="line-syllables"><%= line.syllables %></span>
               </td>
-              <td><%= line.syllables %></td>
             </tr>
             <% end %>
         </table>
+            <br/>
             <br/>
           <% end %>
     </div>

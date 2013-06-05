@@ -32,7 +32,12 @@ tr.stanza {
 #testxxx2 {
   color: white;
 }
-
+.table td#something-0 {
+  border-top: none;
+}
+span.line-syllables {
+  float: right;
+}
 
 /*javascript stuff*/
 .ui-dialog-titlebar {
