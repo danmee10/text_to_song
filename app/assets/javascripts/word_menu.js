@@ -47,7 +47,10 @@ $(document).ready(function() {
             });
 // close options popover, but only remove selected-word class if a dialog box is not open
   $("body").click(function() {
-    if ($("#synonym-box").dialog("isOpen")) {
+    var synonymIsOpen = $( "#synonym-box" ).dialog( "isOpen" );
+    var rhymeIsOpen = $( "#rhyme-box" ).dialog( "isOpen" );
+    var replaceIsOpen = $( "#replace" ).dialog( "isOpen" );
+    if (synonymIsOpen || rhymeIsOpen || replaceIsOpen) {
       $("td.line").popover('hide')
     } else {
       $("td.line").popover('hide').children("span").removeClass("selected-word");
@@ -57,7 +60,6 @@ $(document).ready(function() {
   {
     return $("span.selected-word").text() + ":";
   }
-
 
 //synonyms table
   $( "#synonym-box" ).dialog({
