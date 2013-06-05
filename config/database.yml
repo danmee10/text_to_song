@@ -20,7 +20,7 @@ test:
 
 production:
   adapter: postgresql
-  database: feed_engine
+  database: db/production
   encoding: unicode
   pool: 5
   username:
