@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'simple_form'
-gem 'odyssey'
+gem 'odyssey', "~> 0.1.8"
 gem 'httparty'
 gem 'figaro'
 gem 'pg'

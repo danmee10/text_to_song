@@ -74,7 +74,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.3)
     multi_xml (0.5.3)
-    odyssey (0.1.7)
+    odyssey (0.1.8)
       require_all
     pg (0.15.1)
     polyglot (0.3.3)
@@ -156,7 +156,7 @@ DEPENDENCIES
   httparty
   jquery-rails
   less-rails
-  odyssey
+  odyssey (~> 0.1.8)
   pg
   rails (= 3.2.13)
   rspec-rails
