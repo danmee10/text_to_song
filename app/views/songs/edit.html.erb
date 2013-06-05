@@ -10,8 +10,8 @@
             <% stanza.lines.each do |line| %>
             <tr class="bitch" id=<%="#{line.id}"%>>
               <td class="line menu">
-                <% line.words.each_with_index do |word, index| %>
-               <span class="#{index}" id=<%="#{word.id}"%>><%= word.to_s %></span>
+                <% line.words.each do |word| %>
+               <span id=<%="#{word.id}"%>><%= word.to_s %></span>
                <% end %>
               </td>
               <td><%= line.syllables %></td>

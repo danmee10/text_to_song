@@ -32,8 +32,16 @@ tr.stanza {
 
 
 /*javascript stuff*/
-p.synonyms-tool {
+.tits {
+  background-color: red;
+}
 
+.tool-buttons {
+  width: 105px;
+}
+
+.selected-word {
+  font-weight: bold;
 }
 
 .d-box {

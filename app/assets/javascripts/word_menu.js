@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  //highlight words on hover
+//highlight words yellow on hover
   $("td.line > span").hover(function(){
     $(this).css("background-color", "yellow");
   },
@@ -7,188 +7,203 @@ $(document).ready(function() {
     $(this).css("background-color", "white")
   });
 
-  //options table
-  $(function() {
-    $( "#word-options" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 10
-      },
-      hide: {
-        effect: "explode",
-        duration: 10
-      },
-      position: {
-        at: "left center", of: window
-      }
-    });
-    //open options table
-    $( "td.line > span" ).click(function() {
-      // $( "#word-options" ).dialog( "open" );
+  $('#tool-buttons').hide();
 
-      $( this ).popover({
-        trigger: 'click',
-          html : true,
-        content: function () {
-                   return $('#tool-buttons').html();
-                 }
-      });
-
-
-
-
-
-      $( "#word-options > p.word" ).text( $(this).text() + ":").css({"text-transform": "capitalize",
-                                                                        "font-weight": "bold"});
-      $("#word-options > p.word-id" ).text(this.id).hide();
-      $("#word-options > p.line-index" ).text(this.class).hide();
-      $("#word-options > p.line-id" ).text($(this).closest("tr").attr('id')).hide();
-    });
+//define options popover
+  $( "td.line" ).popover({
+    trigger: 'manual',
+       html: true,
+  placement: "left",
+      title: function() { return spanText(); },
+    content: function () {
+               return $('#tool-buttons').html();
+             }
   });
 
+// open options popover
+  $( "td.line > span" ).click(function(evt) {
+              var word = $(this).html();
+              var wordId = this.id;
+              var lineId = $(this).parents("tr").attr("id");
+              var wordUnderExamination = $(this);
 
-  //synonyms table
-  $(function() {
-    $( "#synonym-box" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 10
-      },
-      hide: {
-        effect: "explode",
-        duration: 10
-      },
-      position: {
-        at: "right center", of: window
-      }
+              evt.stopPropagation();
+              $("span.selected-word").removeClass("selected-word");
+              $(this).addClass('selected-word');
+              $( "td.line" ).not($(this).parent()).popover('hide');
+              $(this).parent().popover('toggle');
+
+              $("div.popover #synonyms").on("click",function() {
+                proposeSynonyms(wordId,lineId,wordUnderExamination);
+              });
+
+              $("div.popover #rhyme-with").on("click",function() {
+                proposeRhymes(wordId,lineId,wordUnderExamination);
+              });
+
+              $("div.popover #replace-with").on("click",function() {
+                replacementForm(wordId,lineId,wordUnderExamination);
+              });
+            });
+// close options popover, but only remove selected-word class if a dialog box is not open
+  $("body").click(function() {
+    if ($("#synonym-box").dialog("isOpen")) {
+      $("td.line").popover('hide')
+    } else {
+      $("td.line").popover('hide').children("span").removeClass("selected-word");
+    }
+  });
+  function spanText()
+  {
+    return $("span.selected-word").text() + ":";
+  }
+
+
+//synonyms table
+  $( "#synonym-box" ).dialog({
+    autoOpen: false,
+    show: {
+      effect: "blind",
+      duration: 10
+    },
+    hide: {
+      effect: "explode",
+      duration: 10
+    },
+    position: {
+      at: "right center", of: window
+    }
+  });
+
+  proposeSynonyms = function(wordId,lineId,wordUnderExamination) {
+    $( "#synonym-box" ).dialog( "open" );
+
+    $('#synonym-box').bind('dialogclose', function(event) {
+      wordUnderExamination.removeClass("selected-word");
     });
 
-    //open synonyms table
-    $( "#synonyms" ).click(function() {
-      var wordId = $(this).siblings("p.word-id").text();
-      var lineId = $(this).siblings("p.line-id").text();
-      $( "#synonym-box" ).dialog( "open" );
-      $( "#synonym-box > p.word" ).text( "Synonyms for " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
-                                                                                                       "font-weight": "bold"});
-      //get synonyms
-      $.getJSON("/api/words/" + wordId + ".json", function(data){
-        var html =''
-        $.each(data.synonyms, function(entryIndex, entry) {
-          html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
+    $( "#synonym-box > p.word" ).text( "Synonyms for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
+                                                                                                     "font-weight": "bold"});
+    //get synonyms
+    $.getJSON("/api/words/" + wordId + ".json", function(data){
+      var html =''
+      $.each(data.synonyms, function(entryIndex, entry) {
+        html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
+      });
+      $('ul.synonyms').html(html);
+      //clickable synonyms
+      $('ul.synonyms > li').each(function() {
+        $(this).click(function() {
+
+          var newWord = $(this).text();
+          $.ajax({
+                  type: "PUT",
+                  url: "/api/lines/" + lineId + ".json",
+                  data: { old_word: wordId, new_word: newWord },
+                  dataType: "json"
+                });
+
+          wordUnderExamination.html(newWord);
+
+          $(this).css("font-weight", "bold");
+          $( "#synonym-box" ).dialog( "close" );
         });
-        $('ul.synonyms').html(html);
-        //clickable synonyms
-        $('ul.synonyms > li').each(function() {
-          $(this).click(function() {
+      });
+    });
+    return false;
+  }
+
+//rhymes table
+  $( "#rhyme-box" ).dialog({
+    autoOpen: false,
+    show: {
+      effect: "blind",
+      duration: 10
+    },
+    hide: {
+      effect: "explode",
+      duration: 10
+    },
+    position: {
+      at: "right center", of: window
+    }
+  });
+
+//open rhymes table
+  proposeRhymes = function(wordId,lineId,wordUnderExamination) {
+    $( "#rhyme-box" ).dialog( "open" );
+
+    $('#rhyme-box').bind('dialogclose', function(event) {
+      $("span.selected-word").removeClass("selected-word");
+    });
+
+    $( "#rhyme-box > p.word" ).text( "Rhymes for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
+                                                                                                     "font-weight": "bold"});
+    //get rhymes
+    $.getJSON("/api/words/" + wordId + ".json", function(data){
+      var html =''
+      $.each(data.rhymes, function(entryIndex, entry) {
+        html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
+      });
+      $('ul.rhymes').html(html);
+      //clickable rhymes
+      $('ul.rhymes > li').each(function() {
+        $(this).click(function() {
+
+            var newWord = $(this).text();
             $.ajax({
-                    type: "PUT",
-                    url: "/api/lines/" + lineId + ".json",
-                    data: { old_word: wordId, new_word: $(this).text() },
-                    dataType: "json"
-                  });
-            $(this).css("font-weight", "bold");
-            $( "#synonym-box" ).dialog( "close" );
-          });
+                  type: "PUT",
+                  url: "/api/lines/" + lineId + ".json",
+                  data: { old_word: wordId, new_word: newWord },
+                  dataType: "json"
+                });
+
+          wordUnderExamination.html(newWord);
+
+          $(this).css("font-weight", "bold");
+          $( "#rhyme-box" ).dialog( "close" );
         });
       });
-      return false
     });
+    return false
+  }
+
+//replacement form
+  $( "#replace" ).dialog({
+    autoOpen: false,
+    show: {
+      effect: "blind",
+      duration: 10
+    },
+    hide: {
+      effect: "explode",
+      duration: 10
+    },
+    position: {
+      at: "right center", of: window
+    }
   });
 
-  //rhymes table
-  $(function() {
-    $( "#rhyme-box" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 10
-      },
-      hide: {
-        effect: "explode",
-        duration: 10
-      },
-      position: {
-        at: "right center", of: window
-      }
+//open replacement form
+  replacementForm = function(wordId,lineId,wordUnderExamination) {
+    $( "#replace" ).dialog( "open" );
+
+    $('#replace').bind('dialogclose', function(event) {
+      $("span.selected-word").removeClass("selected-word");
     });
 
-    //open rhymes table
-    $( "#rhyme-with" ).click(function() {
-      var wordId = $(this).siblings("p.word-id").text()
-      var lineId = $(this).siblings("p.line-id").text();
-      $( "#rhyme-box" ).dialog( "open" );
-      $( "#rhyme-box > p.word" ).text( "Rhymes for " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
-                                                                                                       "font-weight": "bold"});
-      //get rhymes
-      $.getJSON("/api/words/" + wordId + ".json", function(data){
-        var html =''
-        $.each(data.rhymes, function(entryIndex, entry) {
-          html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
-        });
-        $('ul.rhymes').html(html);
-        //clickable rhymes
-        $('ul.rhymes > li').each(function() {
-          $(this).click(function() {
-              $.ajax({
-                    type: "PUT",
-                    url: "/api/lines/" + lineId + ".json",
-                    data: { old_word: wordId, new_word: $(this).text() },
-                    dataType: "json"
-                  });
-            $(this).css("font-weight", "bold");
-            $( "#rhyme-box" ).dialog( "close" );
-          });
-        });
+    $( "#replace > p.word" ).text( "Replace " + wordUnderExamination.text() + " with:").css("font-weight", "bold");
+    $('#replace-button').click(function() {
+      var newWord = $(this).siblings().val();;
+      $.ajax({
+        type: "PUT",
+        url: "/api/lines/" + lineId + ".json",
+        data: { old_word: wordId, new_word: newWord },
+        dataType: "json"
       });
-      return false
-    });
-  });
 
-  //replacement form
-  $(function() {
-    $( "#replace" ).dialog({
-      autoOpen: false,
-      show: {
-        effect: "blind",
-        duration: 10
-      },
-      hide: {
-        effect: "explode",
-        duration: 10
-      },
-      position: {
-        at: "right center", of: window
-      }
+      wordUnderExamination.html(newWord);
+      $( "#replace" ).dialog( "close" );
     });
-
-    //open replacement form
-    $( "#replace-with" ).click(function() {
-      var wordId = $(this).siblings("p.word-id").text();
-      var lineId = $(this).siblings("p.line-id").text();
-      $( "#replace" ).dialog( "open" );
-      $( "#replace > p.word" ).text( "Replace " + $("#word-options > p.word").text()).css({"text-transform": "capitalize",
-                                                                                              "font-weight": "bold"});
-      $('#replace-button').click(function() {
-        $.ajax({
-          type: "PUT",
-          url: "/api/lines/" + lineId + ".json",
-          data: { old_word: wordId, new_word: $("#appendedInputButton").val() },
-          dataType: "json"
-        });
-        $( "#replace" ).dialog( "close" );
-      });
-    });
-  });
-
-  //enlarge and bold options table options on hover
-  $("p.tool-belt").hover(function(){
-    $(this).css("font-weight", "bold");
-    $(this).css("font-size", "+=5");
-  },
-  function() {
-    $(this).css("font-weight", "normal")
-    $(this).css("font-size", "-=5");
-  });
+  }
 });
