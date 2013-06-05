@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603020735) do
+ActiveRecord::Schema.define(:version => 20130605201149) do
 
   create_table "alt_spellings", :force => true do |t|
     t.string   "alt_spelling"
@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20130603020735) do
 
   create_table "songs", :force => true do |t|
     t.string   "title"
-    t.string   "original_text"
     t.string   "edited_text"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "original_text"
   end
 
   create_table "stanzas", :force => true do |t|
