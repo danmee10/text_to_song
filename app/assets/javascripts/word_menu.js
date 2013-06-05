@@ -73,12 +73,21 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "right center", of: window
-    }
+      at: "center", of: window
+    },
+    minHeight: 200,
+    maxHeight: 400,
+    width: 300,
+    draggable: true,
+    modal: true,
+    open: function (event, ui) {
+            $('#synonym-box').css('overflow', 'scroll');
+          }
   });
 
   proposeSynonyms = function(wordId,lineId,wordUnderExamination) {
     $( "#synonym-box" ).dialog( "open" );
+    $( ".ui-dialog" ).addClass( "modal" );
 
     $('#synonym-box').bind('dialogclose', function(event) {
       wordUnderExamination.removeClass("selected-word");
@@ -90,7 +99,7 @@ $(document).ready(function() {
     $.getJSON("/api/words/" + wordId + ".json", function(data){
       var html =''
       $.each(data.synonyms, function(entryIndex, entry) {
-        html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
+        html += '<li class="replacement-word">' + entry.spelling + '</li>';
       });
       $('ul.synonyms').html(html);
       //clickable synonyms
@@ -127,8 +136,15 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "right center", of: window
-    }
+      at: "center", of: window
+    },
+    minHeight: 200,
+    maxHeight: 400,
+    width: 300,
+    modal: true,
+    open: function (event, ui) {
+            $('#rhyme-box').css('overflow', 'scroll');
+          }
   });
 
 //open rhymes table
@@ -145,7 +161,7 @@ $(document).ready(function() {
     $.getJSON("/api/words/" + wordId + ".json", function(data){
       var html =''
       $.each(data.rhymes, function(entryIndex, entry) {
-        html += '<li class="' + entry.spelling + '">' + entry.spelling + '</li>';
+        html += '<li class="replacement-word">' + entry.spelling + '</li>';
       });
       $('ul.rhymes').html(html);
       //clickable rhymes
@@ -182,8 +198,10 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "right center", of: window
-    }
+      at: "center", of: window
+    },
+    width: 300,
+    modal: true
   });
 
 //open replacement form

@@ -29,12 +29,36 @@
 tr.stanza {
   border-bottom: solid 3px #000;
 }
+#testxxx2 {
+  color: white;
+}
 
 
 /*javascript stuff*/
-.tits {
-  background-color: red;
+.ui-dialog-titlebar {
+  margin-bottom: 4px;
 }
+button.ui-button {
+  float: right;
+  height: 23px;
+  /*border-radius: 1px;*/
+}
+.replacement-word:hover {
+  text-decoration: underline;
+}
+.input-append {
+  margin-left: 5px;
+}
+/*
+.ui-menu {
+  width: 1300px;
+}
+
+.ui-dialog {
+  border: solid 1px black;
+  background-color: #aaa;
+  width: 20px;
+}*/
 
 .tool-buttons {
   width: 105px;
@@ -44,12 +68,4 @@ tr.stanza {
   font-weight: bold;
 }
 
-.d-box {
-  border: solid 1px black;
-  background-color: #aaa;
-  width: 20px;
-}
 
-.ui-menu {
-  width: 1300px;
-}
