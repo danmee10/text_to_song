@@ -76,6 +76,7 @@ GEM
     multi_xml (0.5.3)
     odyssey (0.1.7)
       require_all
+    pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -156,6 +157,7 @@ DEPENDENCIES
   jquery-rails
   less-rails
   odyssey
+  pg
   rails (= 3.2.13)
   rspec-rails
   sass-rails (~> 3.2.3)

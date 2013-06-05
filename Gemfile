@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'sqlite3'
 gem 'simple_form'
 gem 'odyssey'
 gem 'httparty'
 gem 'figaro'
+gem 'pg'
 
 
 group :assets do
@@ -20,6 +20,7 @@ end
 
 group :development do
   gem 'rspec-rails'
+  gem 'sqlite3'
   gem "better_errors"
   gem "binding_of_caller"
 end
