@@ -28,8 +28,6 @@ $(document).ready(function() {
               $(this).parent().popover('toggle');
 
               $("div.popover #synonyms").on("click",function() {
-      debugger
-
                 proposeSynonyms(wordId,lineId,wordUnderExamination);
               });
 
@@ -63,16 +61,8 @@ $(document).ready(function() {
 //synonyms table
   $( "#synonym-box" ).dialog({
     autoOpen: false,
-    show: {
-      effect: "blind",
-      duration: 10
-    },
-    hide: {
-      effect: "explode",
-      duration: 10
-    },
     position: {
-      at: "center", of: "body"
+      at: "left" of: window
     },
     height: 200,
     width: 300,
@@ -135,16 +125,8 @@ $(document).ready(function() {
 //rhymes table
   $( "#rhyme-box" ).dialog({
     autoOpen: false,
-    show: {
-      effect: "blind",
-      duration: 10
-    },
-    hide: {
-      effect: "explode",
-      duration: 10
-    },
     position: {
-      at: "center", of: "body"
+      at: "left" of: window
     },
     height: 200,
     width: 300,
@@ -205,16 +187,8 @@ $(document).ready(function() {
 //replacement form
   $( "#replace" ).dialog({
     autoOpen: false,
-    show: {
-      effect: "blind",
-      duration: 10
-    },
-    hide: {
-      effect: "explode",
-      duration: 10
-    },
     position: {
-      at: "center", of: "body"
+      at: "left" of: window
     },
     width: 300,
     modal: true
