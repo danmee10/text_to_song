@@ -72,10 +72,9 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "center", of: window
+      at: "center", of: "body"
     },
-    minHeight: 200,
-    maxHeight: 400,
+    height: 200,
     width: 300,
     draggable: true,
     modal: true,
@@ -145,10 +144,9 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "center", of: window
+      at: "center", of: "body"
     },
-    minHeight: 200,
-    maxHeight: 400,
+    height: 200,
     width: 300,
     modal: true,
     open: function (event, ui) {
@@ -216,7 +214,7 @@ $(document).ready(function() {
       duration: 10
     },
     position: {
-      at: "center", of: window
+      at: "center", of: "body"
     },
     width: 300,
     modal: true

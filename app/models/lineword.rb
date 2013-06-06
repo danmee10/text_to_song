@@ -10,7 +10,7 @@ class Lineword < ActiveRecord::Base
     find_by_line_id_and_word_id(line_id, word_id)
   end
 
-  def replace_word_with(new_word_id)
-
+  def word
+    Word.find(word_id)
   end
 end

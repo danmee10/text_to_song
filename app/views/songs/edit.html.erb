@@ -7,11 +7,11 @@
     <div class="span6 pull-right poem">
           <% @song.stanzas.each_with_index do |stanza, index| %>
         <table class="table">
-            <% stanza.lines.each_with_index do |line, index| %>
+            <% stanza.lines.order("id ASC").each_with_index do |line, index| %>
             <tr id=<%="#{line.id}"%>>
               <td class="line menu" id="something-<%=index%>">
-                <% line.words.reverse.each do |word| %>
-                  <span id=<%="#{word.id}"%>><%= word.to_s %></span>
+                <% line.linewords.order("id ASC").each do |lineword| %>
+                  <span id=<%="#{lineword.word_id}"%>><%= lineword.word.to_s %></span>
                 <% end %>
                 <p class="line-syllables"><%= line.syllables %></p>
               </td>
