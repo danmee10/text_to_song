@@ -117,7 +117,7 @@ class Word < ActiveRecord::Base
         end
       end
     end
-    word_objects_array
+    word_objects_array ? word_objects_array : []
   end
 
   def thesaurus_parser(response)

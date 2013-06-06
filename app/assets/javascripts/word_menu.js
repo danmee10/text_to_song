@@ -28,6 +28,8 @@ $(document).ready(function() {
               $(this).parent().popover('toggle');
 
               $("div.popover #synonyms").on("click",function() {
+      debugger
+
                 proposeSynonyms(wordId,lineId,wordUnderExamination);
               });
 
