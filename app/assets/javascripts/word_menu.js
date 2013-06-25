@@ -88,7 +88,7 @@ $(document).ready(function() {
     $( "#synonym-box > p.word" ).text( "Synonyms for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
                                                                                                      "font-weight": "bold"});
     //get synonyms
-    $.getJSON("http://poem-engine.herokuapp.com/api/words/" + wordId + ".json", function(data){
+    $.getJSON("/api/words/" + wordId + ".json", function(data){
       var html =''
       $.each(data.synonyms, function(entryIndex, entry) {
         html += '<li class="replacement-word">' + entry.spelling + '</li>';
@@ -107,7 +107,7 @@ $(document).ready(function() {
           var newWord = $(this).text();
           $.ajax({
                   type: "PUT",
-                  url: "http://poem-engine.herokuapp.com/api/lines/" + lineId + ".json",
+                  url: "/api/lines/" + lineId + ".json",
                   data: { old_word: wordId, new_word: newWord },
                   dataType: "json"
                 });
@@ -150,7 +150,7 @@ $(document).ready(function() {
     $( "#rhyme-box > p.word" ).text( "Rhymes for " + wordUnderExamination.text() + ":").css({"text-transform": "capitalize",
                                                                                                      "font-weight": "bold"});
     //get rhymes
-    $.getJSON("http://poem-engine.herokuapp.com/api/words/" + wordId + ".json", function(data){
+    $.getJSON("/api/words/" + wordId + ".json", function(data){
       var html =''
       $.each(data.rhymes, function(entryIndex, entry) {
         html += '<li class="replacement-word">' + entry.spelling + '</li>';
@@ -169,7 +169,7 @@ $(document).ready(function() {
             var newWord = $(this).text();
             $.ajax({
                   type: "PUT",
-                  url: "http://poem-engine.herokuapp.com/api/lines/" + lineId + ".json",
+                  url: "/api/lines/" + lineId + ".json",
                   data: { old_word: wordId, new_word: newWord },
                   dataType: "json"
                 });
@@ -207,7 +207,7 @@ $(document).ready(function() {
       var newWord = $(this).siblings().val();;
       $.ajax({
         type: "PUT",
-        url: "http://poem-engine.herokuapp.com/api/lines/" + lineId + ".json",
+        url: "/api/lines/" + lineId + ".json",
         data: { old_word: wordId, new_word: newWord },
         dataType: "json"
       });

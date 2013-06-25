@@ -7,7 +7,6 @@ class SongsController < ApplicationController
   def create
     @song = Song.create(params[:song])
     @scaffold = Scaffold.new(params[:song][:original_text], @song.id)
-    # @song.lines = @scaffold.lines
     @song.stanzas = @scaffold.stanzas
     if @song.save
       redirect_to edit_song_path(@song.id)

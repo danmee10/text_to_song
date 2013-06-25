@@ -7,9 +7,6 @@ class LinesController < ApplicationController
     @song = Song.find_by_id(@stanza.song_id)
     @line_word = Lineword.find(@line.id, @word.id)
     @Line_word.word_id = @new_word.id
-    # current line, old word, new word to replace
-    # current_line find the old word
-    # remove the relationship
 
 
     fail
